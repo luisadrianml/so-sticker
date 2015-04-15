@@ -25,3 +25,28 @@ proguard/
 
 # Log Files
 *.log
+
+# OSX files
+.DS_Store
+ 
+# Ignore gradle files
+.gradle
+.gradletasknamecache
+ 
+ 
+# built application files
+*.apk
+*.ap_
+ 
+# files for the dex VM
+*.dex
+
+# Eclipse project files
+.classpath
+.project
+
+# Intellij project files
+*.iml
+*.ipr
+*.iws
+.idea/
