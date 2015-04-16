@@ -38,7 +38,9 @@
 
 
 
-
+    <string name="msg_product_code_required">Product Code Required.</string>
+    <string name="msg_product_code_invalidLength">Invalid Length of Product Code. Only allowed: 8,11,12,13.</string>
+    <string name="msg_product_name_required">Product Name Required.</string>
 
 
 

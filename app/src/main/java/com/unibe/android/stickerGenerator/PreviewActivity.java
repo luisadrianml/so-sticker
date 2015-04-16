@@ -2,12 +2,18 @@ package com.unibe.android.stickerGenerator;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.onbarcode.barcode.android.AndroidColor;
 import com.onbarcode.barcode.android.AndroidFont;
+import com.onbarcode.barcode.android.Codabar;
 import com.onbarcode.barcode.android.Code11;
+import com.onbarcode.barcode.android.EAN13;
+import com.onbarcode.barcode.android.EAN8;
 import com.onbarcode.barcode.android.IBarcode;
+import com.onbarcode.barcode.android.ITF14;
+import com.onbarcode.barcode.android.UPCA;
 import com.unibe.android.stikerGenerator.models.Product;
 import android.app.Activity;
 import android.content.Context;
@@ -31,6 +37,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 public class PreviewActivity extends Activity {
 	
@@ -53,11 +60,13 @@ public class PreviewActivity extends Activity {
 		
 		
 		ImageView imgBarcode = (ImageView) findViewById(R.id.imgvBarcode);
-		bmBarcode = Bitmap.createBitmap(500, 200, Bitmap.Config.ARGB_8888);
+		bmBarcode = Bitmap.createBitmap(700,300, Bitmap.Config.ARGB_8888);
+
 		Canvas canvasBarcode = new Canvas(bmBarcode);
 		try {
 			generateBarCode(p, canvasBarcode);
 			imgBarcode.setImageBitmap(bmBarcode);
+            //imgBarcode.setScaleType(ImageView.ScaleType.MATRIX);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,44 +83,196 @@ public class PreviewActivity extends Activity {
 	 * */
 	private static void generateBarCode(Product p,Canvas canvas) throws Exception
     {
-        Code11 barcode = new Code11();
+        int lenCode = p.getId().toString().length();
 
-        // barcode data to encode
-        barcode.setData(Long.toString(p.getId()));
+        if (lenCode == 7){
+            EAN8 barcode = new EAN8();
 
-        // Unit of Measure, pixel, cm, or inch
-        barcode.setUom(IBarcode.UOM_PIXEL);
-        // barcode bar module width (X) in pixel
-        barcode.setX(5f);
-        // barcode bar module height (Y) in pixel
-        barcode.setY(85f);
+	         /*
+               EAN 8 Valid data char set:
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9 (Digits)
 
-        // barcode image margins
-        barcode.setLeftMargin(10f);
-        barcode.setRightMargin(10f);
-        barcode.setTopMargin(10f);
-        barcode.setBottomMargin(10f);
+               EAN 8 Valid data length: 7 digits only, excluding the last checksum digit
+            */
+            barcode.setData(Long.toString(p.getId()));
 
-        // barcode image resolution in dpi
-        barcode.setResolution(72);
 
-        // disply barcode encoding data below the barcode
-        barcode.setShowText(false);
-        // barcode encoding data font style
-        barcode.setTextFont(new AndroidFont("Arial", Typeface.NORMAL, 12));
-        // space between barcode and barcode encoding data
-        barcode.setTextMargin(6);
-        barcode.setTextColor(AndroidColor.black);
-        
-        // barcode bar color and background color in Android device
-        barcode.setForeColor(AndroidColor.black);
-        barcode.setBackColor(AndroidColor.white);
+            // Unit of Measure, pixel, cm, or inch
+            barcode.setUom(IBarcode.UOM_PIXEL);
+            // barcode bar module width (X) in pixel
+            barcode.setX(4f);
+            // barcode bar module height (Y) in pixel
+            barcode.setY(110f);
 
-        /*
-           specify your barcode drawing area
-	    */
-	    RectF bounds = new RectF(30, 30, 0, 0);
-        barcode.drawBarcode(canvas, bounds);
+            // barcode image margins
+            barcode.setLeftMargin(10f);
+            barcode.setRightMargin(10f);
+            barcode.setTopMargin(10f);
+            barcode.setBottomMargin(10f);
+
+            // barcode image resolution in dpi
+            barcode.setResolution(72);
+
+            // disply barcode encoding data below the barcode
+            barcode.setShowText(true);
+            // barcode encoding data font style
+            barcode.setTextFont(new AndroidFont("Arial", 0, 35));
+            // space between barcode and barcode encoding data
+            barcode.setTextMargin(6);
+            barcode.setTextColor(AndroidColor.black);
+
+            // barcode bar color and background color in Android device
+            barcode.setForeColor(AndroidColor.black);
+            barcode.setBackColor(AndroidColor.white);
+
+	        /* specify your barcode drawing area*/
+            RectF bounds = new RectF(80, 80, 0, 0);
+            barcode.drawBarcode(canvas, bounds);
+        }
+        else if (lenCode == 11){
+               //UPC-A
+            UPCA barcode = new UPCA();
+
+            /*
+               UPC-A Valid data char set:
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9 (Digits)
+
+               UPC-A Valid data length: 11 digits only, excluding the last checksum digit
+            */
+            barcode.setData(Long.toString(p.getId()));
+
+            // Unit of Measure, pixel, cm, or inch
+            barcode.setUom(IBarcode.UOM_PIXEL);
+            // barcode bar module width (X) in pixel
+            barcode.setX(4f);
+            // barcode bar module height (Y) in pixel
+            barcode.setY(110f);
+
+            // barcode image margins
+            barcode.setLeftMargin(10f);
+            barcode.setRightMargin(10f);
+            barcode.setTopMargin(10f);
+            barcode.setBottomMargin(10f);
+
+            // barcode image resolution in dpi
+            barcode.setResolution(72);
+
+            // disply barcode encoding data below the barcode
+            barcode.setShowText(true);
+            // barcode encoding data font style
+            barcode.setTextFont(new AndroidFont("Arial", Typeface.NORMAL, 35));
+            // space between barcode and barcode encoding data
+            barcode.setTextMargin(6);
+            barcode.setTextColor(AndroidColor.black);
+
+            // barcode bar color and background color in Android device
+            barcode.setForeColor(AndroidColor.black);
+            barcode.setBackColor(AndroidColor.white);
+
+            /*specify your barcode drawing area*/
+            RectF bounds = new RectF(80, 80, 0, 0);
+            barcode.drawBarcode(canvas, bounds);
+        }
+        else if (lenCode == 12){
+            //EAN 13
+
+            EAN13 barcode = new EAN13();
+
+            /*
+               EAN 13 Valid data char set:
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9 (Digits)
+
+               EAN 13 Valid data length: 12 digits only, excluding the last checksum digit
+            */
+            barcode.setData(Long.toString(p.getId()));
+
+            // for EAN13 with supplement data (2 or 5 digits
+
+            // Unit of Measure, pixel, cm, or inch
+            barcode.setUom(IBarcode.UOM_PIXEL);
+            // barcode bar module width (X) in pixel
+            barcode.setX(4f);
+            // barcode bar module height (Y) in pixel
+            barcode.setY(110f);
+
+            // barcode image margins
+            barcode.setLeftMargin(10f);
+            barcode.setRightMargin(10f);
+            barcode.setTopMargin(10f);
+            barcode.setBottomMargin(10f);
+
+            // barcode image resolution in dpi
+            barcode.setResolution(72);
+
+            // disply barcode encoding data below the barcode
+            barcode.setShowText(true);
+            // barcode encoding data font style
+            barcode.setTextFont(new AndroidFont("Arial", Typeface.NORMAL, 35));
+            // space between barcode and barcode encoding data
+            barcode.setTextMargin(6);
+            barcode.setTextColor(AndroidColor.black);
+
+            // barcode bar color and background color in Android device
+            barcode.setForeColor(AndroidColor.black);
+            barcode.setBackColor(AndroidColor.white);
+
+	        /*specify your barcode drawing area*/
+            RectF bounds = new RectF(80, 80, 0, 0);
+            barcode.drawBarcode(canvas, bounds);
+        }
+        else if (lenCode == 13){
+            //ITF14
+            ITF14 barcode = new ITF14();
+
+            /*
+               ITF 14 Valid data char set:
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9 (Digits)
+
+               ITF 14 Valid data length: 13 digits only, excluding the last checksum digit
+            */
+            barcode.setData(Long.toString(p.getId()));
+
+            // ITF-14 Wide Narrow bar Ratio
+            // Valid value is from 2.0 to 3.0 inclusive.
+            barcode.setN(3.0f);
+
+            // ITF-14 bearer bar size vs bar module (X) size ratio
+            // Valid values are 0-10 which are a multiple of X.
+            barcode.setBearerBarHori(1);
+            barcode.setBearerBarVert(1);
+
+            // Unit of Measure, pixel, cm, or inch
+            barcode.setUom(IBarcode.UOM_PIXEL);
+            // barcode bar module width (X) in pixel
+            barcode.setX(4f);
+            // barcode bar module height (Y) in pixel
+            barcode.setY(110f);
+
+            // barcode image margins
+            barcode.setLeftMargin(10f);
+            barcode.setRightMargin(10f);
+            barcode.setTopMargin(10f);
+            barcode.setBottomMargin(10f);
+
+            // barcode image resolution in dpi
+            barcode.setResolution(72);
+
+            // disply barcode encoding data below the barcode
+            barcode.setShowText(true);
+            // barcode encoding data font style
+            barcode.setTextFont(new AndroidFont("Arial", Typeface.NORMAL, 35));
+            // space between barcode and barcode encoding data
+            barcode.setTextMargin(6);
+            barcode.setTextColor(AndroidColor.black);
+
+            // barcode bar color and background color in Android device
+            barcode.setForeColor(AndroidColor.black);
+            barcode.setBackColor(AndroidColor.white);
+
+	        /*specify your barcode drawing area */
+            RectF bounds = new RectF(80, 80, 0, 0);
+            barcode.drawBarcode(canvas, bounds);
+        }
     }
 
 	/**
@@ -137,6 +298,10 @@ public class PreviewActivity extends Activity {
                 PdfWriter.getInstance(doc, new FileOutputStream(path_pdf_temp));
                 doc.open();
 
+                //persist barcode image to set to pdf
+                String pathBarcode = persistImage(bmBarcode,"barcode_" + p.getId());
+
+                doc.add(Image.getInstance(pathBarcode));
 
 
                 par = new Paragraph(50);
@@ -183,6 +348,29 @@ public class PreviewActivity extends Activity {
         } else {
             return false;
         }
+    }
+
+     /**
+     * @author Fernando Perez
+     * @version 1.0
+     * @since 1.0
+     */
+    private String persistImage(Bitmap bitmap, String name) {
+        File filesDir = getCacheDir();
+        File imageFile = new File(filesDir, name + ".png");
+        boolean error = false;
+        OutputStream os;
+        try {
+            os = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            error = true;
+            Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+        }
+
+        return !error ? imageFile.getAbsolutePath() : null;
     }
 
     /**

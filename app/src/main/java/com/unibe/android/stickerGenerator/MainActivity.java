@@ -15,12 +15,24 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends Activity {
+
+    public List<Integer> lengthAvailableBarcode = new ArrayList<Integer>();
+    private String msgError = "";
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        lengthAvailableBarcode.add(7);
+        lengthAvailableBarcode.add(11);
+        lengthAvailableBarcode.add(12);
+        lengthAvailableBarcode.add(13);
 	}
 
 	@Override
@@ -56,12 +68,8 @@ public class MainActivity extends Activity {
             i.putExtra(PreviewActivity.EXTRA_PRODUCT,p);
             startActivity(i);
         } else {
-            Toast.makeText(MainActivity.this, getResources().getString(R.string.error_message), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, msgError, Toast.LENGTH_SHORT).show();
         }
-
-
-
-
 	}
 
     /**
@@ -80,7 +88,24 @@ public class MainActivity extends Activity {
      * @return Boolean with result if the data is valid (not empty) to go through
      */
     private Boolean isValidData(EditText code, EditText name) {
-        Boolean result = !code.getText().toString().isEmpty() && !name.getText().toString().isEmpty();
-        return result;
+        boolean validData = true;
+
+        if (name.getText() == null || name.getText().toString().isEmpty()){
+            validData = false;
+            msgError = getString(R.string.msg_product_name_required);
+        }
+        else if (code.getText() == null || code.getText().toString().isEmpty()){
+            validData = false;
+            msgError = getString(R.string.msg_product_code_required);
+        }
+        else{
+            String lCode = code.getText() != null ? code.getText().toString() : null;
+            if (lCode != null && !lengthAvailableBarcode.contains(lCode.length())){
+                validData = false;
+                msgError = getString(R.string.msg_product_code_invalidLength);
+            }
+        }
+
+        return validData;
     }
 }
