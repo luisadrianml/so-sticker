@@ -7,15 +7,24 @@ import com.onbarcode.barcode.android.IBarcode;
 import com.unibe.android.stikerGenerator.models.Product;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
 
 public class PreviewActivity extends Activity {
 	
@@ -100,9 +109,36 @@ public class PreviewActivity extends Activity {
 	 * @version 1.0
 	 * @since 1.0
 	 */
-	public void onClickPrint(View view){
+	public void onClickPrint(View view) throws IOException {
 		//TODO: finish this module with Google Cloud Print
+        if (!isNetworkAvailable()) {
+            Toast.makeText(PreviewActivity.this,
+                    getResources().getString(R.string.notNetwork),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+
+            File file = new File("file:///android_asset/silabo.pdf");
+            Intent printIntent = new Intent(PreviewActivity.this, PrintDialogActivity.class);
+            printIntent.setDataAndType(Uri.fromFile(file), "application/pdf");
+            printIntent.putExtra(PrintDialogActivity.PRINT_FLAG_EXTRA, "Android print demo");
+            startActivity(printIntent);
+        }
+
 	}
+
+    public boolean isNetworkAvailable() {
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        // if no network is available networkInfo will be null
+        // otherwise check if we are connected
+        if (networkInfo != null && networkInfo.isConnected()) {
+            Log.e("Network Testing", "***Available***");
+            return true;
+        }
+        Log.e("Network Testing", "***Not Available***");
+        return false;
+    }
 	
 	/**
 	 * @version 1.0

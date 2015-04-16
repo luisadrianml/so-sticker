@@ -13,6 +13,39 @@
     <string name="previewPrint">Preview Print</string>
     <string name="short_notAvailable">N/A</string>
     <string name="back">Back</string>
-    
-	
+
+    <string name="icon_download">&#xf0ed;</string>
+    <string name="icon_like">&#xf087;</string>
+    <string name="title_activity_print_dialog">PrintDialogActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+
+    <string name="intengrante1">Fernando Perez</string>
+    <string name="intengrante2">Luis Martinez</string>
+    <string name="intengrante3">Jeffry Gonzalez</string>
+    <string name="intengrante4">Yasselys Delgado</string>
+    <string name="intengrante5">Allam Galan</string>
+    <string name="intengrante6">Salvador Cuevas</string>
+
+    <string name="profesora">Raisa Hidalgo</string>
+    <string name="team">The Team</string>
+    <string name="teacher">Teacher</string>
+    <string name="version_title">Version</string>
+    <string name="version_unknown">Unknown version</string>
+    <string name="descriptionA">We are an app for barcode generation for stickers, that request for the description of the product and the code. This project is developed with the course of Operating System of UNIBE..</string>
+    <string name="error_message">Invalid fields, please verify.</string>
+    <string name="yes">Yes</string>
+    <string name="notNetwork">Network connection not available, please verify your internet connection</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
 </resources>
