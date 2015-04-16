@@ -1,0 +1,142 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.unibe.android.stickerGenerator.PreviewActivity"
+   	style="@style/MainLayout"
+    android:id="@+id/generalContainer">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/containerFrame">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/backgroundPreview"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_p" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:id="@+id/layoutContainer"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/selector"
+                android:padding="40dp"
+                android:id="@+id/containerCodeBar">
+
+                <ImageView
+                    android:id="@+id/imgvBarcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/default_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_above="@+id/tvLblProductCode"
+                    android:contentDescription="@string/barcode"
+                     />
+
+                <TextView
+                    android:id="@+id/tvLblProductCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/tvProductCode"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/product_code" />
+
+                <TextView
+                    android:id="@+id/tvProductCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/ProductValue"
+                    android:layout_above="@+id/tvLblProductName"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/short_notAvailable"
+                    android:gravity="center_vertical|center_horizontal" />
+
+                <TextView
+                    android:id="@+id/tvLblProductName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/product_name" />
+
+                <TextView
+                    android:id="@+id/tvProductName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/ProductValue"
+                    android:layout_below="@+id/tvLblProductName"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/short_notAvailable"
+                    android:gravity="center_vertical|center_horizontal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:id="@+id/layoutButtonsPreview">
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:paddingRight="20dp"
+                    fancy:borderWidth="1dp"
+                    fancy:defaultColor="@color/white"
+                    fancy:focusColor="@color/primary_dark"
+                    fancy:iconResource="@drawable/ic_back"
+                    fancy:fontIconSize="10sp"
+                    fancy:iconPosition="left"
+                    fancy:radius="10dp"
+                    fancy:text="@string/back"
+                    fancy:textColor="@color/accent"
+                    android:onClick="onClickBack"
+                    android:orientation="vertical"
+                    android:layout_marginRight="5dp" />
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btnPrint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:paddingRight="20dp"
+                    fancy:borderWidth="1dp"
+                    fancy:defaultColor="@color/white"
+                    fancy:focusColor="@color/primary_dark"
+                    fancy:iconResource="@drawable/ic_print"
+                    fancy:fontIconSize="10sp"
+                    fancy:iconPosition="left"
+                    fancy:radius="10dp"
+                    fancy:text="@string/print"
+                    fancy:textColor="@color/accent"
+                    android:onClick="onClickPrint"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="5dp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
