@@ -73,6 +73,12 @@ public class MainActivity extends Activity {
         startActivity(i);
     }
 
+    /**
+     * Check if the data is valid for two EditTexts
+     * @param code EditText for the code of the product
+     * @param name EditText for the name of the product
+     * @return Boolean with result if the data is valid (not empty) to go through
+     */
     private Boolean isValidData(EditText code, EditText name) {
         Boolean result = !code.getText().toString().isEmpty() && !name.getText().toString().isEmpty();
         return result;

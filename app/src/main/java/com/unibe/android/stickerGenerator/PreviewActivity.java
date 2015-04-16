@@ -9,10 +9,10 @@ import com.onbarcode.barcode.android.AndroidFont;
 import com.onbarcode.barcode.android.Code11;
 import com.onbarcode.barcode.android.IBarcode;
 import com.unibe.android.stikerGenerator.models.Product;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
@@ -115,6 +115,7 @@ public class PreviewActivity extends Activity {
     }
 
 	/**
+     * Method for print the file generated (when print button is pressed)
 	 * @version 1.0
 	 * @since 1.0
 	 */
@@ -153,17 +154,44 @@ public class PreviewActivity extends Activity {
             //end: generate pdf to print
 
 
+            //start:  proccess of printing file with Google Cloud Print
             File file = new File(path_pdf_temp);
             Intent printIntent = new Intent(PreviewActivity.this, PrintDialogActivity.class);
             printIntent.setDataAndType(Uri.fromFile(file), "application/pdf");
-            printIntent.putExtra(PrintDialogActivity.PRINT_FLAG_EXTRA, "Android print demo");
+            printIntent.putExtra(PrintDialogActivity.PRINT_FLAG_EXTRA, "sticker_"+p.getId());
             startActivity(printIntent);
+            //end: process of printing file with Google Cloud Print
+
         }
 
 	}
 
-    public boolean isNetworkAvailable() {
+    /**
+     * Check if the supplied context can render PDF files via some installed application that reacts to a intent
+     * with the pdf mime type and viewing action.
+     * @param context The Context of the application
+     * @return if the android device can display PDF files within others apps
+     * @version 1.0
+     * @since 1.0
+     */
+    public static boolean canDisplayPdf(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        Intent testIntent = new Intent(Intent.ACTION_VIEW);
+        testIntent.setType("application/pdf");
+        if (packageManager.queryIntentActivities(testIntent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    /**
+     * Verify if network is available
+     * @return boolean with the respective value about the network available
+     * @version 1.0
+     * @since 1.0
+     */
+    public boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         // if no network is available networkInfo will be null
@@ -177,6 +205,7 @@ public class PreviewActivity extends Activity {
     }
 	
 	/**
+     * Back button is pressed
 	 * @version 1.0
 	 * @since 1.0
 	 */

@@ -16,13 +16,16 @@ public class AboutActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-
         settingVersion();
     }
 
+    /**
+     * Setting the version of the application
+     * @version 1.0
+     * @since 1.0
+     */
     private void settingVersion() {
         TextView version = (TextView) findViewById(R.id.version_app);
-
         PackageInfo pInfo = null;
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
