@@ -165,7 +165,7 @@
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:text="@string/intengrante3"
-                                android:id="@+id/textView7" />
+                                android:id="@+id/textView324234" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -174,14 +174,14 @@
                         android:orientation="horizontal"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/linearLayout2"
+                        android:id="@+id/linearLayoutasdasdas"
                         android:gravity="center_vertical"
                         android:layout_marginTop="16dp" >
 
                         <ImageView
                             android:layout_width="fill_parent"
                             android:layout_height="100dp"
-                            android:id="@+id/imageView6"
+                            android:id="@+id/imageView234234"
                             android:src="@drawable/lorenzo_image"
                             android:layout_weight="2" />
 
