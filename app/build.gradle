@@ -32,4 +32,5 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.github.medyo:fancybuttons:1.2@aar'
     compile files('libs/OnBarcode.AndroidBarcode.jar')
+    compile files('libs/itextg-5.4.4.jar')
 }
